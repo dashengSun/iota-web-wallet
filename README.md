@@ -4,6 +4,7 @@ This is a light cute web wallet for IOTA, hope you enjoy it.
 Your can send different value for different address in one transaction.
 
 ## How to use
+The always online web page: http://whisperd.tech/iota-web-wallet/
 
 ### Use the website
 
