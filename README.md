@@ -25,7 +25,8 @@ Then open the index.html.
 
 
 ## Todos
--[ ] Add history transactions
+- [ ] Enable interrupt attachToTangle
+- [ ] Add history transactions
 
 
 

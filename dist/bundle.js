@@ -11521,7 +11521,11 @@ module.exports = {
 const client = __webpack_require__(46);
 
 $(document).ready(function(){
+  $(".loader").hide()
+
   $("#submit").click(function(){
+    $("#submit").prop('disabled', true)
+    $(".loader").show();
     var addr1 = $("#addr1").val()
     var val1 = $("#val1").val()
 
@@ -11597,10 +11601,14 @@ $(document).ready(function(){
     console.log(transfers)
 
     client.sendTransfers(transfers, function(error, success) {
-      if (error != null) {
+      if (!!error) {
+        $(".loader").hide()
+        $("#submit").prop('disabled', false)
         alert("Error: " + error);
       } else {
-        alert("Success: " + success)
+        $(".loader").hide()
+        $("#submit").prop('disabled', false)
+        alert("Success")
       }
 
     })
@@ -11630,6 +11638,11 @@ var sendTransfers = function (originTransfers, callback) {
   var minWeightMagnitude = 15;
   var seed = $("#seed").val();
 
+  if (!seed) {
+    return callback("Seed is empty");
+  } else if (seed.match(/[^A-Z9]/) || seed.match(/^[9]+$/)) {
+    return callback("Seed is not valid");
+  }
   var transfers = [];
   for (i = 0; i < originTransfers.length; i++) {
     if (originTransfers[i].address != "" && originTransfers[i].value != "") {
@@ -11646,13 +11659,13 @@ var sendTransfers = function (originTransfers, callback) {
   console.log("You are sending to these addresses:");
   console.log(transfers);
   iota.api.sendTransfer(seed, depth, minWeightMagnitude, transfers, function(error, success) {
-    if (error != null) {
+    if (!!error) {
       console.log("we have error: " + error);
-      callback(error);
+      return callback(error);
     } else {
       console.log(success);
       console.log("no error");
-      callback(null, success);
+      return callback(null, success);
     }
   });
 }

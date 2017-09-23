@@ -1,7 +1,11 @@
 const client = require("./sendTransfer");
 
 $(document).ready(function(){
+  $(".loader").hide()
+
   $("#submit").click(function(){
+    $("#submit").prop('disabled', true)
+    $(".loader").show();
     var addr1 = $("#addr1").val()
     var val1 = $("#val1").val()
 
@@ -77,10 +81,14 @@ $(document).ready(function(){
     console.log(transfers)
 
     client.sendTransfers(transfers, function(error, success) {
-      if (error != null) {
+      if (!!error) {
+        $(".loader").hide()
+        $("#submit").prop('disabled', false)
         alert("Error: " + error);
       } else {
-        alert("Success: ")
+        $(".loader").hide()
+        $("#submit").prop('disabled', false)
+        alert("Success")
       }
 
     })
