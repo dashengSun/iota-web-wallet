@@ -1,5 +1,9 @@
 var IOTA = require("iota.lib.js");
-var curl = require("curl.lib.js")
+window.curl = require("curl.lib.js")
+
+try {
+  curl.init();
+} catch (e) {}
 
 window.iota = new IOTA({
   'provider': "http://localhost:14265"
@@ -13,7 +17,7 @@ var sendTransfers = function (originTransfers, callback) {
 
   window.curl.overrideAttachToTangle(iota.api)
   var depth = 3;
-  var minWeightMagnitude = 15;
+  var minWeightMagnitude = 14;
   var seed = $("#seed").val();
 
   if (!seed) {

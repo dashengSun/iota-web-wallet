@@ -11,7 +11,7 @@ The always online web page: http://whisperd.tech/iota-web-wallet/
 
 ### User from source
 ```
-git clone 
+git clone git@github.com:dashengSun/iota-web-wallet.git
 ```
 ```
 npm install

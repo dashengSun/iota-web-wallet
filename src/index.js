@@ -80,18 +80,25 @@ $(document).ready(function(){
     ]
     console.log(transfers)
 
-    client.sendTransfers(transfers, function(error, success) {
-      if (!!error) {
-        $(".loader").hide()
-        $("#submit").prop('disabled', false)
-        alert("Error: " + error);
-      } else {
-        $(".loader").hide()
-        $("#submit").prop('disabled', false)
-        alert("Success")
-      }
+    try {
+      client.sendTransfers(transfers, function(error, success) {
+        if (!!error) {
+          $(".loader").hide()
+          $("#submit").prop('disabled', false)
+          alert("Error: " + error);
+        } else {
+          $(".loader").hide()
+          $("#submit").prop('disabled', false)
+          alert("Success")
+        }
 
-    })
+      })
+    } catch (e) {
+      $(".loader").hide()
+      $("#submit").prop('disabled', false)
+      alert("Error: " + e);
+    }
+
 
   });
 });
