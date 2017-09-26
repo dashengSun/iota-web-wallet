@@ -1,5 +1,6 @@
 var IOTA = require("iota.lib.js");
 window.curl = require("curl.lib.js")
+const curlClient = require("./ccurl-interface")
 
 try {
   curl.init();
@@ -9,13 +10,32 @@ window.iota = new IOTA({
   'provider': "http://localhost:14265"
 });
 
+var localAttachToTangle = function(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, callback) {
+  console.log("Light Wallet: localAttachToTangle");
+
+  curlClient.ccurlHashing(curl, trunkTransaction, branchTransaction, minWeightMagnitude, trytes, function(error, success) {
+    console.log("Light Wallet: ccurl.ccurlHashing finished:");
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(success);
+    }
+    if (callback) {
+      return callback(error, success);
+    } else {
+      return success;
+    }
+  })
+}
+
+iota.api.attachToTangle = localAttachToTangle;
+
 var sendTransfers = function (originTransfers, callback) {
 
   window.iota = new IOTA({
     'provider': $("#host-provider").val()
   });
 
-  window.curl.overrideAttachToTangle(iota.api)
   var depth = 3;
   var minWeightMagnitude = 14;
   var seed = $("#seed").val();
