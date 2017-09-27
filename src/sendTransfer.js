@@ -28,13 +28,13 @@ var localAttachToTangle = function(trunkTransaction, branchTransaction, minWeigh
   })
 }
 
-iota.api.attachToTangle = localAttachToTangle;
-
 var sendTransfers = function (originTransfers, callback) {
 
   window.iota = new IOTA({
     'provider': $("#host-provider").val()
   });
+
+  iota.api.attachToTangle = localAttachToTangle;
 
   var depth = 3;
   var minWeightMagnitude = 14;

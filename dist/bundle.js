@@ -13822,13 +13822,13 @@ var localAttachToTangle = function(trunkTransaction, branchTransaction, minWeigh
   })
 }
 
-iota.api.attachToTangle = localAttachToTangle;
-
 var sendTransfers = function (originTransfers, callback) {
 
   window.iota = new IOTA({
     'provider': $("#host-provider").val()
   });
+
+  iota.api.attachToTangle = localAttachToTangle;
 
   var depth = 3;
   var minWeightMagnitude = 14;
@@ -30865,9 +30865,9 @@ void main() {
 const MAX_TIMESTAMP_VALUE = (Math.pow(3,27) - 1) / 2;
 
 var ccurlHashing = function(libccurl, trunkTransaction, branchTransaction, minWeightMagnitude, trytes, callback) {
-  if (!libccurl.hasOwnProperty("ccurl_pow")) {
-    return callback(new Error("Hashing not available"));
-  }
+  // if (!libccurl.hasOwnProperty("ccurl_pow")) {
+  //   return callback(new Error("Hashing not available"));
+  // }
 
   var iotaObj = iota;
 
@@ -30959,7 +30959,7 @@ var ccurlHashing = function(libccurl, trunkTransaction, branchTransaction, minWe
 
     var newTrytes = iotaObj.utils.transactionTrytes(txObject);
 
-    libcurl.pow({trytes: newTrytes, minWeight: minWeightMagnitude}).then(function(nonce) {
+    libccurl.pow({trytes: newTrytes, minWeight: minWeightMagnitude}).then(function(nonce) {
       var returnedTrytes = newTrytes.substr(0, 2673-81).concat(nonce);
       var newTxObject= iotaObj.utils.transactionObject(returnedTrytes);
 
